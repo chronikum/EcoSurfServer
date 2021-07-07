@@ -35,11 +35,23 @@ export default class RedisManager {
 	 * @param key to lookup
 	 * @returns any
 	 */
-	checkCache(key: String): Promise<any> {
+	checkCache(key: string): Promise<string> {
 		return new Promise(resolve => {
 			RedisManager.instance.client.get(key, function (err, data) {
 				console.log(data);
+				resolve(data)
 			});
 		})
+	}
+
+	/**
+	 * Set Cache for object
+	 * 
+	 * @param data to set for 
+	 * @param key provided
+	 */
+	setCache(key: string, data: any) {
+		this.client.set(key, JSON.stringify(data), 'EX', 10);
+		console.log("Cache set!");
 	}
 }
