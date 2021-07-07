@@ -1,4 +1,5 @@
 import RedisManager from "../RedisManager";
+import GreenWebFoundationFetcher from "../sources/GreenWebFoundationFetcher";
 
 const express = require('express');
 
@@ -10,12 +11,7 @@ const generalRouter = express.Router();
 
 const redisManager = new RedisManager();
 
-/**
- * This is a sin
- */
-function quickHackToRemoveAnfuhrungszeichen(string: string): string {
-	return string.slice(1, -1);
-}
+const gwfManager = new GreenWebFoundationFetcher();
 
 /**
  * Gets the system status
@@ -33,6 +29,7 @@ generalRouter.get('/status', async (req, res) => {
 generalRouter.post('/getValidation', async (req, res) => {
 	const key = req?.body?.key;
 
+	gwfManager.fetchDatabase();
 	if (key) {
 		const redisResult: string = await redisManager.checkCache(key);
 		// Success, key was cached and is available
