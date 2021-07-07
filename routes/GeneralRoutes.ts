@@ -42,7 +42,7 @@ generalRouter.post('/getValidation', async (req, res) => {
 				validation: JSON.parse(redisResult)
 			})
 		} else { // Not available yet
-			const validationData = "Hallo Welt String"
+			const validationData = `Hallo Welt String ${key}` // TODO: Implement validation and rating of website
 
 			redisManager.setCache(key, validationData);
 			res.send({
