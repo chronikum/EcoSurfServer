@@ -34,7 +34,7 @@ generalRouter.post('/getValidation', async (req, res) => {
 	const key = req?.body?.key;
 
 	if (key) {
-		const redisResult: string = await redisManager.checkCache("Test");
+		const redisResult: string = await redisManager.checkCache(key);
 		// Success, key was cached and is available
 		if (redisResult) {
 			res.send({
