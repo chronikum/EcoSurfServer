@@ -42,12 +42,8 @@ export default class ValidationManager {
 		else {
 			hostname = url.split('/')[0];
 		}
-
-		//find & remove port number
-		hostname = hostname.split(':')[0];
-		//find & remove "?"
-		hostname = hostname.split('?')[0];
-		hostname = hostname.replace(/^www\./, '').split('.').slice(0, -1).join('.');
+		// hostname = hostname.replace(/^www\./, '').split('.').slice(0, -1).join('.');
+		hostname = hostname.replace("www.", "");
 		return hostname;
 	}
 }
