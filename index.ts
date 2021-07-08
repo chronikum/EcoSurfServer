@@ -33,7 +33,7 @@ export class Server {
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control, Key, Access-Control-Allow-Origin');
 			next();
 		});
-		this.app.use(cors({ origin: "https://google.com" }));
+		this.app.use(cors({ origin: "https://google.de" }));
 	}
 
 	/**
