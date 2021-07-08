@@ -65,7 +65,8 @@ export default class GreenWebFoundationFetcher {
 							if (row?.url) {
 								const url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
 								RedisManager.instance.setCache(url, {
-									isGreen: 1
+									isGreen: 1,
+									url: url
 								});
 							}
 						}
@@ -99,14 +100,8 @@ export default class GreenWebFoundationFetcher {
 	// }
 	extractHostname(url) {
 		var hostname;
-
-		if (url.indexOf("//") > -1) {
-			hostname = url.split('/')[2];
-		}
-		else {
-			hostname = url.split('/')[0];
-		}
-		// hostname = hostname.replace(/^www\./, '').split('.').slice(0, -1).join('.');
+		hostname = hostname.replace("http://", "");
+		hostname = hostname.replace("https://", "");
 		hostname = hostname.replace("www.", "");
 		return hostname;
 	}
