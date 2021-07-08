@@ -1,4 +1,10 @@
-## EcoSurf
+# EcoSurf
+
+This is the EcoSurf-Backend.  
+This is a project work in progress developed during the hackathon https://collabothon.eu in 2021.  
+The license of the project is not determined yet but will be in the future.  
+
+We welcome contribution.
 
 
 ## **Licenses:**
@@ -13,7 +19,10 @@ You can find them here:
 https://admin.thegreenwebfoundation.org/admin/green-urls
 
 Also, we are using different other open source projects we would like to attribute.
-We will attribute every open source project we used. There can be duplicates inside.
+We will attribute every open source project we used.  
+There can be duplicates inside.
+**The table was created with a script**, so please be aware that we use information which can be automatically  
+obtained by the package information file. It may contain errors.
 
 Thank you very much for the contribution to open source!
 
