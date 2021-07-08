@@ -63,7 +63,7 @@ export default class GreenWebFoundationFetcher {
 								throw err
 							}
 							if (row?.url) {
-								const url = this.extractHostname(row?.url) || 'Error';
+								const url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
 								RedisManager.instance.setCache(url, {
 									isGreen: 1
 								});
