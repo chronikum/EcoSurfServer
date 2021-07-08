@@ -24,7 +24,6 @@ export default class ValidationManager {
 		if (await this.redisClient.checkCache(this.extractHostname(link))) {
 			return this.redisClient.checkCache(this.extractHostname(link))
 		} else {
-			// TODO eva
 			return null;
 		}
 	}

@@ -76,28 +76,6 @@ export default class GreenWebFoundationFetcher {
 		});
 	}
 
-
-	/**
-	 * Thanks
-	 * https://stackoverflow.com/a/23945027
-	 */
-	// extractHostname(url) {
-	// 	var hostname;
-
-	// 	if (url.indexOf("//") > -1) {
-	// 		hostname = url.split('/')[2];
-	// 	}
-	// 	else {
-	// 		hostname = url.split('/')[0];
-	// 	}
-
-	// 	//find & remove port number
-	// 	hostname = hostname.split(':')[0];
-	// 	//find & remove "?"
-	// 	hostname = hostname.split('?')[0];
-	// 	hostname = hostname.replace(/^www\./, '').split('.').slice(0, -1).join('.');
-	// 	return hostname;
-	// }
 	extractHostname(url) {
 		url = url.replace("http://", "");
 		url = url.replace("https://", "");
