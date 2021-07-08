@@ -99,11 +99,10 @@ export default class GreenWebFoundationFetcher {
 	// 	return hostname;
 	// }
 	extractHostname(url) {
-		var hostname;
-		hostname = hostname.replace("http://", "");
-		hostname = hostname.replace("https://", "");
-		hostname = hostname.replace("www.", "");
-		return hostname;
+		url = url.replace("http://", "");
+		url = url.replace("https://", "");
+		url = url.replace("www.", "");
+		return url;
 	}
 
 	/**
