@@ -39,8 +39,9 @@ export default class RedisManager {
 		return new Promise(resolve => {
 			RedisManager.instance.client.get(key, function (err, data) {
 				console.log(data);
-				data.url = key
-				resolve(data)
+				let dataJSON = JSON.parse(data.url)
+				dataJSON.url = key;
+				resolve(JSON.stringify(dataJSON))
 			});
 		})
 	}
