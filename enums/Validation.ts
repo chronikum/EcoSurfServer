@@ -1,5 +1,5 @@
 interface Validation {
-	isGreen: 1,
+	isGreen: 0,
 }
 
 export default Validation;
