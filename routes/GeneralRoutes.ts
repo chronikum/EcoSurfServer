@@ -26,7 +26,7 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
-generalRouter.get('/update', async (req, res) => {
+generalRouter.get('/updateDatabase', async (req, res) => {
 
 	gwfManager.fetchDatabase();
 	res.send({
