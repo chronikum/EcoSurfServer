@@ -1,5 +1,7 @@
 import express from 'express';
 import generalRouter from './routes/GeneralRoutes';
+const cors = require('cors');
+
 
 export class Server {
 	app = express();
@@ -31,6 +33,7 @@ export class Server {
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control, Key, Access-Control-Allow-Origin');
 			next();
 		});
+		this.app.use(cors({ origin: "https://google.com" }));
 	}
 
 	/**

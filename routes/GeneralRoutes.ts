@@ -27,9 +27,9 @@ generalRouter.get('/status', async (req, res) => {
  * Gets the websites validation
  */
 generalRouter.post('/getValidation', async (req, res) => {
-	const key = req?.body?.key;
+	const key: string = req?.body?.key;
 
-	gwfManager.fetchDatabase();
+	// gwfManager.fetchDatabase();
 	if (key) {
 		const redisResult: string = await redisManager.checkCache(key);
 		// Success, key was cached and is available

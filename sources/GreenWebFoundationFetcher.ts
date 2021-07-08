@@ -1,7 +1,8 @@
 import moment from "moment";
 const http = require('https'); // or 'https' for https:// URLs
 const fs = require('fs');
-
+import sqlite3 from 'sqlite3'
+import { open } from 'sqlite'
 
 /**
  * Fetching weekly the websites provided by the Green Web Foundation
@@ -36,12 +37,12 @@ export default class GreenWebFoundationFetcher {
 		let dateNow = moment()
 		dateNow = dateNow.subtract(1, 'days')
 		const totalUrl = `${this.baseUrl}${dateNow.format('YYYY-MM-DD')}${this.baseUrlSuffix}`
+		const path = `./temp/${dateNow}.db.gz`;
 
-		const file = fs.createWriteStream(`./temp/${dateNow}.db.gz`);
+		const file = fs.createWriteStream(path);
 		const request = http.get(totalUrl, function (response) {
 			response.pipe(file);
 		});
-
 	}
 
 	/**
