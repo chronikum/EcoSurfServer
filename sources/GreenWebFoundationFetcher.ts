@@ -47,6 +47,7 @@ export default class GreenWebFoundationFetcher {
 			response.pipe(file);
 		});
 		// Called on completion of download
+		// This code is incredible likely to break actually please watch out
 		file.on('finish', function () {
 			const unpackedPath = `./temp/${dateNow.format('YYYY-MM-DD')}.db`
 			gunzip(path, unpackedPath, () => {
