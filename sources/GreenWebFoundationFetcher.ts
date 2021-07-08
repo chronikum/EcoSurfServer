@@ -63,7 +63,7 @@ export default class GreenWebFoundationFetcher {
 								throw err
 							}
 							if (row?.url) {
-								const url = row.url
+								const url = this.extractHostname(row?.url) || 'Error';
 								RedisManager.instance.setCache(url, {
 									isGreen: 1
 								});
@@ -73,6 +73,29 @@ export default class GreenWebFoundationFetcher {
 				})
 			})
 		});
+	}
+
+
+	/**
+	 * Thanks
+	 * https://stackoverflow.com/a/23945027
+	 */
+	extractHostname(url) {
+		var hostname;
+
+		if (url.indexOf("//") > -1) {
+			hostname = url.split('/')[2];
+		}
+		else {
+			hostname = url.split('/')[0];
+		}
+
+		//find & remove port number
+		hostname = hostname.split(':')[0];
+		//find & remove "?"
+		hostname = hostname.split('?')[0];
+
+		return hostname;
 	}
 
 	/**

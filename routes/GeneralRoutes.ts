@@ -48,6 +48,7 @@ generalRouter.post('/getValidation', async (req, res) => {
 		if (redisResult) {
 			res.send({
 				success: true,
+				message: "Cached",
 				validation: JSON.parse(redisResult)
 			})
 		} else { // Not available yet
@@ -56,6 +57,7 @@ generalRouter.post('/getValidation', async (req, res) => {
 			// redisManager.setCache(key, validationData);
 			res.send({
 				success: true,
+				message: "Not cached",
 				validation: {
 					isGreen: 0,
 				}
