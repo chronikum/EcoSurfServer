@@ -1,5 +1,6 @@
 import RedisManager from "../RedisManager";
 import GreenWebFoundationFetcher from "../sources/GreenWebFoundationFetcher";
+import ValidationManager from "../ValidationManager";
 
 const express = require('express');
 
@@ -13,6 +14,8 @@ const redisManager = new RedisManager();
 
 const gwfManager = new GreenWebFoundationFetcher();
 
+const validationManager = ValidationManager.instance;
+
 /**
  * Gets the system status
  */
@@ -23,13 +26,21 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
+generalRouter.get('/update', async (req, res) => {
+
+	gwfManager.fetchDatabase();
+	res.send({
+		success: true,
+		message: "Running database update"
+	})
+});
+
 /**
  * Gets the websites validation
  */
 generalRouter.post('/getValidation', async (req, res) => {
 	const key: string = req?.body?.key;
 
-	// gwfManager.fetchDatabase();
 	if (key) {
 		const redisResult: string = await redisManager.checkCache(key);
 		// Success, key was cached and is available
@@ -39,8 +50,8 @@ generalRouter.post('/getValidation', async (req, res) => {
 				validation: JSON.parse(redisResult)
 			})
 		} else { // Not available yet
-			const validationData = `Hallo Welt String ${key}` // TODO: Implement validation and rating of website
-
+			const validationData = await validationManager.getLinkInformation(key);
+			console.log(validationData);
 			redisManager.setCache(key, validationData);
 			res.send({
 				success: true,

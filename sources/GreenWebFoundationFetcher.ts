@@ -3,6 +3,8 @@ const http = require('https'); // or 'https' for https:// URLs
 const fs = require('fs');
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
+import RedisManager from "../RedisManager";
+const gunzip = require('gunzip-file')
 
 /**
  * Fetching weekly the websites provided by the Green Web Foundation
@@ -40,8 +42,35 @@ export default class GreenWebFoundationFetcher {
 		const path = `./temp/${dateNow}.db.gz`;
 
 		const file = fs.createWriteStream(path);
+		// Write the file
 		const request = http.get(totalUrl, function (response) {
 			response.pipe(file);
+		});
+		// Called on completion of download
+		file.on('finish', function () {
+			const unpackedPath = `./temp/${dateNow.format('YYYY-MM-DD')}.db`
+			gunzip(path, unpackedPath, () => {
+				open({
+					filename: unpackedPath,
+					driver: sqlite3.Database
+				}).then(async (db) => {
+					console.log("Database opened!")
+					const rowsCount = await db.each(
+						"SELECT * FROM 'greendomain'",
+						(err, row) => {
+							if (err) {
+								throw err
+							}
+							if (row?.url) {
+								const url = row.url
+								RedisManager.instance.setCache(url, {
+									isGreen: 1
+								});
+							}
+						}
+					)
+				})
+			})
 		});
 	}
 

@@ -51,7 +51,7 @@ export default class RedisManager {
 	 * @param key provided
 	 */
 	setCache(key: string, data: any) {
-		this.client.set(key, JSON.stringify(data), 'EX', 10);
+		this.client.set(key, JSON.stringify(data), 'EX', 60); // TODO make this much longer
 		console.log("Cache set!");
 	}
 }
