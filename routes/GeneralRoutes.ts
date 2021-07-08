@@ -40,9 +40,10 @@ generalRouter.get('/update', async (req, res) => {
  */
 generalRouter.post('/getValidation', async (req, res) => {
 	const key: string = req?.body?.key;
-
+	console.log("GOT REQUEST FOR " + key)
 	if (key) {
-		const redisResult: string = await redisManager.checkCache(key);
+		// const redisResult: string = await redisManager.checkCache(key);
+		const redisResult = await validationManager.getLinkInformation(key);
 		// Success, key was cached and is available
 		if (redisResult) {
 			res.send({
@@ -50,12 +51,14 @@ generalRouter.post('/getValidation', async (req, res) => {
 				validation: JSON.parse(redisResult)
 			})
 		} else { // Not available yet
-			const validationData = await validationManager.getLinkInformation(key);
-			console.log(validationData);
-			redisManager.setCache(key, validationData);
+			// const validationData = await validationManager.getLinkInformation(key);
+			// console.log(validationData);
+			// redisManager.setCache(key, validationData);
 			res.send({
 				success: true,
-				validation: validationData,
+				validation: {
+					isGreen: 0,
+				}
 			})
 		}
 	} else {

@@ -26,9 +26,10 @@ export default class ValidationManager {
 			console.log("Requested:" + link)
 		}
 		if (await this.redisClient.checkCache(link)) {
-
+			return this.redisClient.checkCache(link)
 		} else {
-			// Later on we will also set own validation
+			// TODO eva
+			return null;
 		}
 	}
 }
