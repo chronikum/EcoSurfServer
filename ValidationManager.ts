@@ -47,7 +47,7 @@ export default class ValidationManager {
 		hostname = hostname.split(':')[0];
 		//find & remove "?"
 		hostname = hostname.split('?')[0];
-
+		hostname = hostname.replace(/^www\./, '').split('.').slice(0, -1).join('.');
 		return hostname;
 	}
 }
