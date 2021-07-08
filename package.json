@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node ./dist/index.js"
+    "start": "tsc && node ./dist/index.js",
+    "server": "tsc && node --max-old-space-size=7168 ./dist/index.js"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
