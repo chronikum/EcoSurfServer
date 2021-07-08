@@ -9,14 +9,29 @@ We welcome contribution.
 
 ## **Licenses:**
 
+## Datasets
 
 **Green Web Dataset**
-
 
 The Green Web Datasets are being publicy offered by the thegreenwebfoundation.org.
 You can find them here:
 
 https://admin.thegreenwebfoundation.org/admin/green-urls
+
+
+**HTTPArchive Dataset**
+
+HTTPArchive also is a important part for our solution to the challenge.  
+You can find their website here: https://httparchive.org  
+We used this tutorial the make the data usable and we removed not important parts for us.  
+We are planning to automate this, but it will take time.
+
+https://github.com/HTTPArchive/httparchive.org/blob/main/docs/gettingstarted_bigquery.md
+
+Also, you can find general information here:  
+https://httparchive.org/reports/page-weight?start=2017_02_15&end=latest&view=list
+
+## Third Party Code and Packages
 
 Also, we are using different other open source projects we would like to attribute.
 We will attribute every open source project we used.  
