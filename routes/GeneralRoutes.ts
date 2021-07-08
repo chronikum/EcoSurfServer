@@ -40,7 +40,7 @@ generalRouter.get('/update', async (req, res) => {
  */
 generalRouter.post('/getValidation', async (req, res) => {
 	const key: string = req?.body?.key;
-	console.log(req)
+	console.log(req.body)
 	if (key) {
 		// const redisResult: string = await redisManager.checkCache(key);
 		const redisResult = await validationManager.getLinkInformation(key);
