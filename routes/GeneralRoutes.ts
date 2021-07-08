@@ -9,9 +9,6 @@ const express = require('express');
  */
 const generalRouter = express.Router();
 
-
-const redisManager = new RedisManager();
-
 const gwfManager = new GreenWebFoundationFetcher();
 
 const validationManager = ValidationManager.instance;
