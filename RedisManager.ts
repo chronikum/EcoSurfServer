@@ -38,10 +38,14 @@ export default class RedisManager {
 	checkCache(key: string): Promise<string> {
 		return new Promise(resolve => {
 			RedisManager.instance.client.get(key, function (err, data) {
-				console.log(data);
-				let dataJSON = JSON.parse(data.url)
-				dataJSON.url = key;
-				resolve(JSON.stringify(dataJSON))
+				if (data) {
+					console.log(data);
+					let dataJSON = JSON.parse(data)
+					dataJSON.url = key;
+					resolve(JSON.stringify(dataJSON))
+				} else {
+					resolve(null)
+				}
 			});
 		})
 	}
