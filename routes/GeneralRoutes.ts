@@ -23,14 +23,14 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
-generalRouter.get('/updateDatabase', async (req, res) => {
+// generalRouter.get('/updateDatabase2', async (req, res) => {
 
-	gwfManager.fetchDatabase();
-	res.send({
-		success: true,
-		message: "Running database update"
-	})
-});
+// 	gwfManager.fetchDatabase();
+// 	res.send({
+// 		success: true,
+// 		message: "Running database update"
+// 	})
+// });
 
 /**
  * Returns the website validation
