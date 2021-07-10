@@ -10,7 +10,7 @@ We came up with an idea and this is the first implementation of it.
 Our implementation is heavily inspired by [haveibeenpwned](https://haveibeenpwned.com/Privacy) password handling.  
 We will never see the hash of the full url you visited.  
 This also increases the overhead of information sent back to you a little, but it is marginal.  
-We implemented better compression to reduce to overhead.  
+We implemented better compression to reduce to overhead (brotli).  
 You can find out more about it on https://ecosurf.io/privacy-practices.  
 It will be improved in the future if this should be necessary.  
 

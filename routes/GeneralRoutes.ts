@@ -1,5 +1,7 @@
+import DatabaseManager from "../core/DatabaseManager";
 import RedisManager from "../RedisManager";
 import GreenWebFoundationFetcher from "../sources/GreenWebFoundationFetcher";
+import HttpArchiveFetcher from "../sources/HttpArchiveFetcher";
 import ValidationManager from "../ValidationManager";
 
 const express = require('express');
@@ -13,6 +15,8 @@ const gwfManager = new GreenWebFoundationFetcher();
 
 const validationManager = ValidationManager.instance;
 
+const archiveFetcher = HttpArchiveFetcher.instance;
+
 /**
  * Gets the system status
  */
@@ -23,14 +27,14 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
-// generalRouter.get('/updateDatabase2', async (req, res) => {
-
-// 	gwfManager.fetchDatabase();
-// 	res.send({
-// 		success: true,
-// 		message: "Running database update"
-// 	})
-// });
+generalRouter.get('/updateDatabase2', async (req, res) => {
+	gwfManager.fetchDatabase();
+	// archiveFetcher.parseLinebyLine();
+	res.send({
+		success: true,
+		message: "Running database update"
+	})
+});
 
 /**
  * Returns the website validation
@@ -49,12 +53,9 @@ generalRouter.post('/getValidations', async (req, res) => {
 				// Success, key was cached and is available
 				if (redisResult) {
 					results.push(
-						{ validation: JSON.parse(redisResult) }
+						{ validation: redisResult }
 					)
-				} else { // Not available yet
-					// const validationData = await validationManager.getLinkInformation(key);
-					// console.log(validationData);
-					// redisManager.setCache(key, validationData);
+				} else {
 					results.push(
 						{
 							validation: {

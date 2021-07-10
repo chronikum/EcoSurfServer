@@ -1,5 +1,7 @@
 import express from 'express';
+import DatabaseManager from './core/DatabaseManager';
 import generalRouter from './routes/GeneralRoutes';
+import HttpArchiveFetcher from './sources/HttpArchiveFetcher';
 const cors = require('cors');
 
 
@@ -11,6 +13,11 @@ export class Server {
 	endpoint: String = "localhost"
 
 	/**
+	 * Database Manager
+	 */
+	dbManager = DatabaseManager.instance;
+
+	/**
 	 * Starts the server
 	 */
 	startServer() {
@@ -19,6 +26,9 @@ export class Server {
 		this.exceptionCallback();
 		this.app.listen(this.port, async () => {
 			console.log(`backend online at ${this.endpoint}:${this.port}`);
+			this.dbManager.statusObservable.subscribe(status => {
+				console.log(status)
+			})
 		});
 	}
 

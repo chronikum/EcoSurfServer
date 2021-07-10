@@ -1,8 +1,11 @@
+import LookUpManager from "./LookupManager";
 import RedisManager from "./RedisManager";
 
 export default class ValidationManager {
 
 	redisClient = RedisManager.instance;
+
+	lookupManager = LookUpManager.instance;
 
 	/**
 	 * Instance logic
@@ -20,10 +23,11 @@ export default class ValidationManager {
 	/**
 	 * Get Validation for link by hostname
 	 */
-	async getLinkInformation(link) {
-		if (await this.redisClient.checkCache(this.extractHostname(link))) {
-			return this.redisClient.checkCache(this.extractHostname(link))
+	async getLinkInformation(key) {
+		if (await this.lookupManager.checkCache(key)) {
+			return await this.lookupManager.checkCache(key)
 		} else {
+			console.log("Key not found!")
 			return null;
 		}
 	}

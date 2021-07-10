@@ -4,6 +4,8 @@ const fs = require('fs');
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 import RedisManager from "../RedisManager";
+import LookUpManager from "../LookupManager";
+import HttpArchiveFetcher from "./HttpArchiveFetcher";
 const gunzip = require('gunzip-file')
 
 /**
@@ -56,21 +58,25 @@ export default class GreenWebFoundationFetcher {
 					driver: sqlite3.Database
 				}).then(async (db) => {
 					console.log("Database opened!")
+					var counter = 0
 					const rowsCount = await db.each(
 						"SELECT * FROM 'greendomain'",
-						(err, row) => {
+						async (err, row) => {
 							if (err) {
 								throw err
 							}
 							if (row?.url) {
 								const url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
-								RedisManager.instance.setCache(url, {
-									isGreen: 1,
-									url: url
+								const result = await LookUpManager.instance.setCache({
+									g: true,
+									f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
 								});
+								console.log(result)
 							}
 						}
-					)
+					).then(() => {
+						console.log("Completed!")
+					})
 				})
 			})
 		});
