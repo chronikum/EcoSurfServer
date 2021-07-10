@@ -4,6 +4,7 @@ import ValidationManager from "../ValidationManager";
 
 const express = require('express');
 
+require('dotenv').config();
 /**
  * Express
  */
@@ -23,14 +24,21 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
-// generalRouter.get('/updateDatabase2', async (req, res) => {
-
-// 	gwfManager.fetchDatabase();
-// 	res.send({
-// 		success: true,
-// 		message: "Running database update"
-// 	})
-// });
+generalRouter.post('/updateDatabase', async (req, res) => {
+	const key = process.env.KEY;
+	const providedKey = req.body?.key;
+	if (providedKey == key) {
+		gwfManager.fetchDatabase();
+		return res.send({
+			success: true,
+			message: "Running database upgrade! this will take a few minutes."
+		})
+	}
+	return res.send({
+		success: false,
+		message: "Don't do that"
+	})
+});
 
 /**
  * Returns the website validation
@@ -42,9 +50,7 @@ generalRouter.post('/getValidations', async (req, res) => {
 	if (keys) {
 		for (var keyRef in keys) {
 			const key = keys[keyRef]
-			console.log("Looking at key: " + key)
 			if (key) {
-				// const redisResult: string = await redisManager.checkCache(key);
 				const redisResult = await validationManager.getLinkInformation(key);
 				// Success, key was cached and is available
 				if (redisResult) {
@@ -52,9 +58,6 @@ generalRouter.post('/getValidations', async (req, res) => {
 						{ validation: JSON.parse(redisResult) }
 					)
 				} else { // Not available yet
-					// const validationData = await validationManager.getLinkInformation(key);
-					// console.log(validationData);
-					// redisManager.setCache(key, validationData);
 					results.push(
 						{
 							validation: {

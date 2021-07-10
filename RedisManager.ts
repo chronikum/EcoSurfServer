@@ -39,7 +39,6 @@ export default class RedisManager {
 		return new Promise(resolve => {
 			RedisManager.instance.client.get(key, function (err, data) {
 				if (data) {
-					console.log(data);
 					let dataJSON = JSON.parse(data)
 					dataJSON.url = key;
 					resolve(JSON.stringify(dataJSON))
@@ -57,8 +56,7 @@ export default class RedisManager {
 	 * @param key provided
 	 */
 	setCache(key: string, data: any) {
-		console.log(key)
-		this.client.set(key, JSON.stringify(data), 'EX', 3600 * 72); // TODO make this much longer
+		this.client.set(key, JSON.stringify(data), 'EX', 3600 * 90); // TODO make this much longer
 		console.log("Cache set!");
 	}
 }
