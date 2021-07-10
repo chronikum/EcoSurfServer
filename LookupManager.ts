@@ -47,7 +47,7 @@ export default class LookUpManager {
 	 * @param data to set
 	 */
 	async setCache(data: any): Promise<any> {
-		return ValidationModel.updateOne({ f: data.f }, data, {
+		ValidationModel.updateOne({ f: data.f }, data, {
 			upsert: true
 		}).exec();
 	}

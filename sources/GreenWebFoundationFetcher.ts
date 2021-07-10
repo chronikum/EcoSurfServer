@@ -67,11 +67,10 @@ export default class GreenWebFoundationFetcher {
 							}
 							if (row?.url) {
 								const url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
-								const result = await LookUpManager.instance.setCache({
+								LookUpManager.instance.setCache({
 									g: true,
 									f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
 								});
-								console.log(result)
 							}
 						}
 					).then(() => {
