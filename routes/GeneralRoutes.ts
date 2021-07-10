@@ -27,12 +27,21 @@ generalRouter.get('/status', async (req, res) => {
 	})
 });
 
-generalRouter.get('/updateDatabase2', async (req, res) => {
+generalRouter.post('/updateDatabase2', async (req, res) => {
 	gwfManager.fetchDatabase();
 	// archiveFetcher.parseLinebyLine();
 	res.send({
 		success: true,
-		message: "Running database update"
+		message: "Running database upgrade"
+	})
+});
+
+generalRouter.post('/updateDatabase3', async (req, res) => {
+	// gwfManager.fetchDatabase();
+	archiveFetcher.parseLinebyLine();
+	res.send({
+		success: true,
+		message: "Running database upgrade"
 	})
 });
 

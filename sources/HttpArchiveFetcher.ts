@@ -19,7 +19,7 @@ export default class HttpArchiveFetcher {
 	/**
 	 * Parse the file line by line
 	 */
-	parseLinebyLine(path: string) {
+	parseLinebyLine() {
 		let rl = readline('assets/bigquerydata.json');
 		rl.on('line', function (line, lineCount, byteCount) {
 			let validation = JSON.parse(line)
