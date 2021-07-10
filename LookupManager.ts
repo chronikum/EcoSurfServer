@@ -71,7 +71,7 @@ export default class LookUpManager {
 		const fs = data.map(data => data.f);
 		ValidationModel.updateMany(
 			{ f: { $in: fs } },
-			data
+			data,
 			{ multi: true },
 		).exec();
 	}
