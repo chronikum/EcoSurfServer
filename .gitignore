@@ -51,3 +51,6 @@ Thumbs.db
 .db
 *.gz
 *.db
+assets/bigquerydata.zip
+.gitignore
+assets/bigquerydata.json
