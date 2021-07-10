@@ -21,7 +21,8 @@ export default class HttpArchiveFetcher {
 	 */
 	parseLinebyLine() {
 		let rl = readline('assets/bigquerydata.json');
-		rl.on('line', function (line, lineCount, byteCount) {
+		let allValidations = [];
+		rl.on('line', async function (line, lineCount, byteCount) {
 			let validation = JSON.parse(line)
 			validation.url = HttpArchiveFetcher.instance.extractHostname(validation.url)
 			let hashedValidation: Validation = {
@@ -29,10 +30,18 @@ export default class HttpArchiveFetcher {
 				si: validation?.bytesTotal, // Size
 				f: HttpArchiveFetcher.instance.hashSha256(validation.url).substring(0, 10),
 			}
-			LookUpManager.instance.setCache(hashedValidation);
+			if ((line % 10000) == 0) {
+				await LookUpManager.instance.insertManyData(allValidations);
+				allValidations = [];
+			}
+			if (line == lineCount) {
+				await LookUpManager.instance.insertManyData(allValidations);
+				allValidations = [];
+			}
 		}).on('error', function (e) {
 			console.log("Error: " + e)
 		});
+
 	}
 
 	/**

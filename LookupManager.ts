@@ -67,6 +67,10 @@ export default class LookUpManager {
 		}).exec();
 	}
 
+	async insertManyData(data: any): Promise<any> {
+		ValidationModel.insertMany(data);
+	}
+
 	async setManyCache(datas: any[]): Promise<any> {
 		ValidationModel.insertMany(datas);
 	}
