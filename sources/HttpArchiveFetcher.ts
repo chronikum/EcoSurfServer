@@ -22,6 +22,7 @@ export default class HttpArchiveFetcher {
 	parseLinebyLine() {
 		let rl = readline('assets/bigquerydata.json');
 		let allValidations = [];
+		let counter = 0
 		rl.on('line', async function (line, lineCount, byteCount) {
 			let validation = JSON.parse(line)
 			validation.url = HttpArchiveFetcher.instance.extractHostname(validation.url)
@@ -31,15 +32,12 @@ export default class HttpArchiveFetcher {
 				f: HttpArchiveFetcher.instance.hashSha256(validation.url).substring(0, 10),
 			}
 			console.log("PUSHING")
+			counter++;
 			allValidations.push(hashedValidation);
-			if ((line % 10000) == 0) {
+			if ((counter % 10000) == 0) {
 				await LookUpManager.instance.insertManyData(allValidations);
 				allValidations = [];
 				console.log(lineCount)
-			}
-			if (line == lineCount) {
-				await LookUpManager.instance.insertManyData(allValidations);
-				allValidations = [];
 			}
 		}).on('error', function (e) {
 			console.log("Error: " + e)
