@@ -31,7 +31,6 @@ export default class HttpArchiveFetcher {
 				si: validation?.bytesTotal, // Size
 				f: HttpArchiveFetcher.instance.hashSha256(validation.url).substring(0, 10),
 			}
-			console.log("PUSHING")
 			counter++;
 			allValidations.push(hashedValidation);
 			if ((counter % 10000) == 0) {
