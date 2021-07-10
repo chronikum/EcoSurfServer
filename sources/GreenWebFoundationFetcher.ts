@@ -72,6 +72,9 @@ export default class GreenWebFoundationFetcher {
 									f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
 								});
 								row = null;
+								counter++;
+								if (Math.random() > 0.9999)
+									console.log(counter)
 							}
 						}
 					).then(() => {
