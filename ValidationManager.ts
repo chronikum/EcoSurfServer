@@ -24,7 +24,7 @@ export default class ValidationManager {
 	 * Get Validation for link by hostname
 	 */
 	async getLinkInformation(keys) {
-		const result = await this.lookupManager.checkMultiCache(keys);
+		const result = await this.lookupManager.checkMultiCache(keys as String[]);
 		if (result?.length != 0) {
 			return result
 		} else {
