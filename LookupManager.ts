@@ -48,9 +48,7 @@ export default class LookUpManager {
 	 * @returns any
 	 */
 	async checkMultiCache(keys: String[]): Promise<Validation[]> {
-		var regexExp = new RegExp(keys.join("|"), 'gi');
-
-		regexExp = "^" + regexExp
+		var regexExp = new RegExp(("^" + keys.join("|")), 'gi');
 		const matches = await ValidationModel.find({
 			f: { $regex: regexExp, $options: 'm' },
 		}) as unknown as Validation[];
