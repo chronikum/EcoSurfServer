@@ -1,9 +1,41 @@
 
 Surf sustainable. EcoSurf.  
 Winner of the Google Challenge at Collabothon 2021.
-# EcoSurf V1
+# EcoSurf EXPERIMENTAL (k anonymity version)
 
-**This is ecosurf V1!**  
+> THIS VERSION SHOULD NOT BE USED. IT IS NEITHER TESTED AND IS CONSIDERED SLOW, UNSAFE AND INEFFICENT.
+
+This version is ecosurf is being considered unstable. It is privacy secure though.  
+Redis was not working for the k-anonymity design, so we switched first to memcached (not working, not well maintained on nodejs)  
+and then, finally, to mongodb.
+
+**Why did we choose a nosql database in favor of a key-value database?**  
+We can easily use regex to implement k-anonymity, which is to my knowledge not possible in comparable speed to other nosql-databases and  
+is considered not possible in key-value databases.
+
+**Why did it not work? What does not work?**  
+Importing currently takes very long. I tried to approaches:  
+-> **HttpArchiveFetcher** (takes very long but only needs 1G of ram constantly)
+	It reads in line for line, comparable to get_next_line in c and inserts them after reading 10000 total results.  
+	Then it goes on and takes the next 10000. It takes a very long time and it is not very effective.  
+-> **GreenWebFoundationFetcher** (Takes shorter, still long and needs on my system quite a lot of ram (20GB!))  
+	It reads in the whole file and then inserts all the read objects at once. This is not really efficient  
+	and may lead to problems. Also, it can easily crash if the memory runs full.  
+
+**So if importing works, why don't you continue it?**  
+It is not that easy. It may work now, but mongodb does need really long to find all matching patterns (~4 seconds. too long).  
+And we return more than usual! In general, 8x more data than normal is transmitted due to the implementation of  
+k-anonymity. But it works. Kind of. 
+
+**Next approaches**  
+I plan to start over and take a completely new approach in handling this amount of data.  
+I am also looking into the possibility in rewriting the backend in Rust, a fast, memory-safe and secure language.  
+It is considered one of the "fastest" languages besided C and Assembly.  Also, we want to work with protobuf or MessagePack.  
+This are dataformats which are way smaller than JSON.
+
+Do you have suggestions what to do? Please let me know at ecosurf@nosc.io.  
+
+**This is ecosurf**  
 In the hackathon beta, we did consider to built it in a privacy focused design.  
 But we did not had enough time. So we thought about how to make it harder for us to track the user.  
 We came up with an idea and this is the first implementation of it.  
@@ -11,9 +43,6 @@ Our implementation is heavily inspired by [haveibeenpwned](https://haveibeenpwne
 We will never see the hash of the full url you visited.  
 This also increases the overhead of information sent back to you a little, but it is marginal.  
 We implemented better compression to reduce to overhead (brotli).  
-You can find out more about it on https://ecosurf.io/privacy-practices.  
-It will be improved in the future if this should be necessary.  
-
 
 This is a project work in progress developed during the hackathon https://collabothon.eu in 2021.  
 Special thanks to the fantastic coding school [42heilbronn](https://42heilbronn.de), which provided the team EcoSurf not only with

@@ -31,8 +31,8 @@ export default class HttpArchiveFetcher {
 				si: validation?.bytesTotal, // Size
 				f: HttpArchiveFetcher.instance.hashSha256(validation.url).substring(0, 10),
 			}
-			counter++;
 			allValidations.push(hashedValidation);
+			counter++;
 			if ((counter % 10000) == 0) {
 				await LookUpManager.instance.insertManyData(allValidations);
 				allValidations = [];
