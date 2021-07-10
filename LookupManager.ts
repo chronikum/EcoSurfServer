@@ -42,6 +42,20 @@ export default class LookUpManager {
 	}
 
 	/**
+	 * Checks the cache for the key. if it is not available, it will return null
+	 * @warning Will NOT sha256-hash the object before setting the cache.
+	 * @param key to lookup
+	 * @returns any
+	 */
+	async checkMultiCache(keys: string[]): Promise<Validation[]> {
+		const matches = await ValidationModel.find({
+			f: { $regex: keys, $options: 'i', $in: keys },
+		}) as unknown as Validation[];
+		console.log(matches)
+		return Promise.resolve(matches)
+	}
+
+	/**
 	 * Set Cache for object.
 	 * 
 	 * @param data to set
@@ -53,9 +67,6 @@ export default class LookUpManager {
 	}
 
 	async setManyCache(datas: any[]): Promise<any> {
-		// ValidationModel.updateOne({ f: data.f }, data, {
-		// 	upsert: true
-		// }).exec();
 		ValidationModel.insertMany(datas);
 	}
 }

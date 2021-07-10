@@ -44,32 +44,37 @@ generalRouter.post('/getValidations', async (req, res) => {
 
 	let results = [];
 	if (keys) {
-		for (var keyRef in keys) {
-			const key = keys[keyRef]
-			console.log("Looking at key: " + key)
-			if (key) {
-				// const redisResult: string = await redisManager.checkCache(key);
-				const redisResult = await validationManager.getLinkInformation(key);
-				// Success, key was cached and is available
-				if (redisResult) {
-					results.push(
-						{ validation: redisResult }
-					)
-				} else {
-					results.push(
-						{
-							validation: {
-								isGreen: 0,
-							}
-						}
-					)
-				}
-			}
-		}
+		const redisResult = await validationManager.getLinkInformation(keys);
 		return res.send({
 			success: true,
-			validations: results
+			validations: redisResult
 		})
+		// for (var keyRef in keys) {
+		// 	const key = keys[keyRef]
+		// 	console.log("Looking at key: " + key)
+		// 	if (key) {
+		// 		// const redisResult: string = await redisManager.checkCache(key);
+		// 		const redisResult = await validationManager.getLinkInformation(key);
+		// 		// Success, key was cached and is available
+		// 		if (redisResult) {
+		// 			results.push(
+		// 				{ validation: redisResult }
+		// 			)
+		// 		} else {
+		// 			results.push(
+		// 				{
+		// 					validation: {
+		// 						isGreen: 0,
+		// 					}
+		// 				}
+		// 			)
+		// 		}
+		// 	}
+		// }
+		// return res.send({
+		// 	success: true,
+		// 	validations: results
+		// })
 	} else {
 		return res.send({
 			success: false,

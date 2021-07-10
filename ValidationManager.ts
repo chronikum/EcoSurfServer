@@ -23,9 +23,10 @@ export default class ValidationManager {
 	/**
 	 * Get Validation for link by hostname
 	 */
-	async getLinkInformation(key) {
-		if (await this.lookupManager.checkCache(key)) {
-			return await this.lookupManager.checkCache(key)
+	async getLinkInformation(keys) {
+		const result = await this.lookupManager.checkMultiCache(keys);
+		if (result?.length != 0) {
+			return result
 		} else {
 			console.log("Key not found!")
 			return null;
