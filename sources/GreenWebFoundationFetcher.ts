@@ -59,6 +59,7 @@ export default class GreenWebFoundationFetcher {
 				}).then(async (db) => {
 					console.log("Database opened!")
 					var counter = 0
+					let datas = [];
 					const rowsCount = await db.each(
 						"SELECT * FROM 'greendomain'",
 						async (err, row) => {
@@ -67,11 +68,12 @@ export default class GreenWebFoundationFetcher {
 							}
 							if (row?.url) {
 								let url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
-								LookUpManager.instance.setCache({
-									g: true,
-									f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
-								});
-								row = null;
+								datas.push(
+									{
+										g: true,
+										f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
+									}
+								)
 								counter++;
 								if (Math.random() > 0.9999)
 									console.log(counter)
@@ -79,6 +81,7 @@ export default class GreenWebFoundationFetcher {
 						}
 					).then(() => {
 						console.log("Completed!")
+						LookUpManager.instance.setManyCache(datas);
 					})
 				})
 			})

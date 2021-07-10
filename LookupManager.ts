@@ -51,4 +51,11 @@ export default class LookUpManager {
 			upsert: true
 		}).exec();
 	}
+
+	async setManyCache(datas: any[]): Promise<any> {
+		// ValidationModel.updateOne({ f: data.f }, data, {
+		// 	upsert: true
+		// }).exec();
+		ValidationModel.insertMany(datas);
+	}
 }
