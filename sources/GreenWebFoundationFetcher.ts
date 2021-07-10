@@ -66,11 +66,12 @@ export default class GreenWebFoundationFetcher {
 								throw err
 							}
 							if (row?.url) {
-								const url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
+								let url = GreenWebFoundationFetcher.instance.extractHostname(row?.url) || 'Error';
 								LookUpManager.instance.setCache({
 									g: true,
 									f: HttpArchiveFetcher.instance.hashSha256(url).substring(0, 10)
 								});
+								row = null;
 							}
 						}
 					).then(() => {
